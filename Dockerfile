@@ -7,6 +7,8 @@ WORKDIR /app
 # Copy project files
 COPY . .
 
+RUN chmod +x mvnw
+
 # Build the project and skip tests
 RUN ./mvnw clean install -DskipTests
 
