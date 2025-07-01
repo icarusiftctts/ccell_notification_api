@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
+
+
 @RestController
 @RequestMapping("/api/notifications")
 @CrossOrigin(origins = "*")
@@ -48,4 +51,8 @@ public class NotificationController {
     public ResponseEntity<Boolean> isUserAuthorized(@RequestHeader("Authorization") String userEmail) {
         return ResponseEntity.ok(authService.isAuthorized(userEmail));
     }
+
+
+
+
 }
