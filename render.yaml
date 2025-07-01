@@ -1,15 +1,10 @@
 services:
   - type: web
     name: ccell-notification-api
-    env: java
     plan: free
     buildCommand: ./mvnw clean install
-    startCommand: java -jar target/your-api-jar-name.jar
+    startCommand: java -jar release/notification-panel-backend-0.0.1-SNAPSHOT.jar
     branch: main
-    envVars:
-      - key: SPRING_DATASOURCE_URL
-        value: jdbc:mysql://your-db-host:port/dbname
-      - key: SPRING_DATASOURCE_USERNAME
-        value: your_db_username
-      - key: SPRING_DATASOURCE_PASSWORD
-        value: your_db_password
+    runtime: docker
+
+
