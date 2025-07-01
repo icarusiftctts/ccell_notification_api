@@ -1,13 +1,12 @@
-package com.example.notofication_panel_backend;
+package com.example.notification_panel_backend; // ✅ Corrected spelling
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class NotoficationPanelBackendApplicationTests {
+class NotificationPanelBackendApplicationTests {
 
 	@Test
 	void contextLoads() {
 	}
-
 }
