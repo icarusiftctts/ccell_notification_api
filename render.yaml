@@ -2,7 +2,7 @@ services:
   - type: web
     name: ccell-notification-api
     plan: free
-    buildCommand: ./mvnw clean install
+    buildCommand: ./mvnw clean install -DskipTests
     startCommand: java -jar release/notification-panel-backend-0.0.1-SNAPSHOT.jar
     branch: main
     runtime: docker

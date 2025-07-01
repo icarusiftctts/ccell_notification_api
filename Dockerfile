@@ -1,13 +1,25 @@
-# Use an official OpenJDK 21 base image
-FROM eclipse-temurin:21-jdk-alpine
+# Use Maven image with Eclipse Temurin JDK 21 to build the project
+FROM maven:3.9.6-eclipse-temurin-21 AS build
 
-# Set the working directory
+# Set working directory
 WORKDIR /app
 
-# Copy the built JAR into the container
-COPY release/notification-panel-backend-0.0.1-SNAPSHOT.jar app.jar
+# Copy project files
+COPY . .
 
-# Expose the port your Spring Boot app runs on
+# Build the project and skip tests
+RUN ./mvnw clean install -DskipTests
+
+# Use a lightweight JDK 21 image to run the jar
+FROM eclipse-temurin:21-jdk-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy the built jar from the builder stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Expose the application port
 EXPOSE 8080
 
 # Run the application
