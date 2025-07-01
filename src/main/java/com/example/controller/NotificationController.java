@@ -1,6 +1,5 @@
 package com.example.controller;
 
-
 import com.example.model.Notification;
 import com.example.repository.NotificationRepository;
 import com.example.service.AuthService;
