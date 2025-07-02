@@ -11,12 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-
-
-
 @RestController
 @RequestMapping("/api/notifications")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*") // Later: replace "*" with your frontend URL
 public class NotificationController {
 
     private final AuthService authService;
@@ -28,15 +25,17 @@ public class NotificationController {
         this.repository = repository;
     }
 
+    // GET all notifications
     @GetMapping
     public List<Notification> getAllNotifications() {
         return repository.findAll();
     }
 
+    // POST a notification (only by authorized users)
     @PostMapping
     public ResponseEntity<String> postNotification(
             @RequestBody Notification notification,
-            @RequestHeader("Authorization") String userEmail
+            @RequestHeader("X-User-Email") String userEmail // Custom header (not Authorization)
     ) {
         if (!authService.isAuthorized(userEmail)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
@@ -47,12 +46,17 @@ public class NotificationController {
         return ResponseEntity.ok("Notification posted successfully");
     }
 
+    // Check if the current user is authorized (optional usage in frontend)
     @GetMapping("/is-authorized")
-    public ResponseEntity<Boolean> isUserAuthorized(@RequestHeader("Authorization") String userEmail) {
+    public ResponseEntity<Boolean> isUserAuthorized(
+            @RequestHeader("X-User-Email") String userEmail
+    ) {
         return ResponseEntity.ok(authService.isAuthorized(userEmail));
     }
 
-
-
-
+    // Expose approved sender list (used by frontend to show/hide UI)
+    @GetMapping("/approved-senders")
+    public ResponseEntity<List<String>> getApprovedSenders() {
+        return ResponseEntity.ok(authService.getApprovedSenders());
+    }
 }

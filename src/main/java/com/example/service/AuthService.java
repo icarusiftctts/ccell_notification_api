@@ -1,13 +1,11 @@
 package com.example.service;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Set;
 
 
 @RestController
@@ -15,8 +13,8 @@ import java.util.Set;
 public class AuthService {
 
     @GetMapping("/approved-senders")
-    public ResponseEntity<List<String>> getApprovedSenders() {
-        List<String> approvedEmails = List.of(
+    public List<String> getApprovedSenders() {
+        return List.of(
                 "c-cell@lnmiit.ac.in",
                 "c-cell.students@lnmiit.ac.in",
                 "24ucs202@lnmiit.ac.in", //Praneel Dev
@@ -37,6 +35,10 @@ public class AuthService {
                 "24uec163@lnmiit.ac.in", //Nikhila S Hari
                 "24ucs120@lnmiit.ac.in" //Panth Moradiya
         );
-        return ResponseEntity.ok(approvedEmails);
+    }
+
+    public boolean isAuthorized(String email) {
+        return getApprovedSenders().contains(email);
     }
 }
+
