@@ -12,8 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/notifications")
-@CrossOrigin(origins = "*") // Later: replace "*" with your frontend URL
+@RequestMapping("/api/notifications")// Later: replace "*" with your frontend URL
 public class NotificationController {
 
     private final AuthService authService;
