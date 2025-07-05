@@ -18,6 +18,7 @@ public class NotificationController {
     private final AuthService authService;
     private final NotificationRepository repository;
 
+
     @Autowired
     public NotificationController(AuthService authService, NotificationRepository repository) {
         this.authService = authService;
