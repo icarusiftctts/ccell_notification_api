@@ -12,14 +12,14 @@ public class GlobalCorsConfig implements WebMvcConfigurer {
         System.out.println("CORS config loaded");
         registry.addMapping("/**")
                 .allowedOrigins(
-                        //"https://your-flutter-web-app.web.app",   // Firebase Hosting or Vercel URL
                         "http://localhost:5000",
                         "http://localhost:0000",
-                        "http://localhost:8000" // Local Flutter Web Dev Server
+                        "https://ccell-b8c42.web.app",
+                        "http://localhost:8000"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
-                .allowCredentials(false); // Set true only if using cookies
+                .allowCredentials(false);
     }
 
 
