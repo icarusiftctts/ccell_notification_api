@@ -15,7 +15,7 @@ public class Notification {
     private String title;
     private String message;
     private String sender;
-    private String from;
+    private String fromUser;
     private String timing;
 
     private LocalDate eventDate;
@@ -25,13 +25,13 @@ public class Notification {
 
     public Notification() {}
 
-    public Notification(Long id, String title, String message, String sender, String from, String timing,
+    public Notification(Long id, String title, String message, String sender, String fromUser, String timing,
                         LocalDate eventDate, LocalDateTime datePosted, LocalDateTime createdAt) {
         this.id = id;
         this.title = title;
         this.message = message;
         this.sender = sender;
-        this.from = from;
+        this.fromUser = fromUser;
         this.timing = timing;
         this.eventDate = eventDate;
         this.datePosted = datePosted;
@@ -81,12 +81,12 @@ public class Notification {
         this.sender = sender;
     }
 
-    public String getFrom() {
-        return from;
+    public String getFromUser() {
+        return fromUser;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public void setFromUser(String fromUser) {
+        this.fromUser = fromUser;
     }
 
     public String getTiming() {

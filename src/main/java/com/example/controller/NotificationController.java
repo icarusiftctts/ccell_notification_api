@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/notifications")// Later: replace "*" with your frontend URL
+@RequestMapping("/api/notifications")
 public class NotificationController {
 
     private final AuthService authService;
