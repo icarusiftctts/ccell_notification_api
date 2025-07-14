@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface FCMTokenRepo extends JpaRepository<FCMToken, Long> {
     Optional<FCMToken> findByUserId(String userId);
-    Optional<FCMToken> findByFCMToken(String fcmToken);
+    Optional<FCMToken> findByFcmToken(String fcmToken);
 
 
 }
