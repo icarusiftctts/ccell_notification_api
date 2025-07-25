@@ -81,9 +81,9 @@ public class FCMService {
                 .setNotification(new WebpushNotification(
                         title,
                         body,
-                        WEB_ICON_URL
+                        "https://ccell-notification-api.onrender.com/static/icon-192.png"
                 ))
-                .setFcmOptions(WebpushFcmOptions.withLink(WEB_CLICK_URL))
+                .setFcmOptions(WebpushFcmOptions.withLink("/"))
                 .build();
     }
 }

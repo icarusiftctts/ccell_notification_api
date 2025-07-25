@@ -10,6 +10,10 @@ public class GlobalCorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         System.out.println("CORS config loaded");
+        registry.addMapping("/static/**")
+                        .allowedOrigins("*")
+                        .allowedMethods("GET")
+                        .maxAge(3600);
         registry.addMapping("/**")
                 .allowedOrigins(
                         "http://localhost:5000",

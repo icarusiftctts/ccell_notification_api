@@ -43,6 +43,16 @@ public class NotificationController {
         return repository.findAll();
     }
 
+    // Add to your controller
+    @GetMapping("/static/icon-192.png")
+    public ResponseEntity<Resource> getIcon() throws IOException {
+        ClassPathResource iconFile = new ClassPathResource("static/web-app-manifest-192x192.png");
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_PNG)
+                .header("Cache-Control", "public, max-age=31536000")
+                .body(iconFile);
+    }
+
     @PostMapping
     public ResponseEntity<String> postNotification(
             @RequestBody Notification notification,
