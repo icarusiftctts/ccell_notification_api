@@ -15,7 +15,9 @@ public class GlobalCorsConfig implements WebMvcConfigurer {
                         "http://localhost:5000",
                         "http://localhost:0000",
                         "https://ccell-b8c42.web.app",
-                        "http://localhost:8000"
+                        "http://localhost:8000",
+                        "https://www.ccellapp.in",
+                        "https://ccellapp.in"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
