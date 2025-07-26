@@ -54,7 +54,8 @@ public class NotificationController {
         ClassPathResource iconFile = new ClassPathResource("static/web-app-manifest-192x192.png");
         return ResponseEntity.ok()
                 .contentType(MediaType.IMAGE_PNG)
-                .header("Cache-Control", "public, max-age=31536000")
+                .header("Cache-Control", "public, max-age=31536000, immutable")
+                .header("Access-Control-Allow-Origin", "*")
                 .body(iconFile);
     }
 
