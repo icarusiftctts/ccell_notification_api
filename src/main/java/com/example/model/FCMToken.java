@@ -34,7 +34,7 @@ public class FCMToken {
         this.updatedAt = LocalDateTime.now();
     }
 
-    boolean existsByFcmToken(String fcmToken);
+
 
     // Getters/Setters
     public long getId() { return id; }
