@@ -1,89 +1,65 @@
 package com.example.service;
 
+import com.example.model.FCMToken;
+import com.example.model.TopicSubscription;
+import com.example.repository.TopicSubscriptionRepository;
 import com.google.firebase.messaging.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class FCMService {
-
     @Autowired
-    private FirebaseMessaging firebaseMessaging;
+    private TopicSubscriptionRepository topicRepo;
 
-    // Web push configuration constants
-    private static final String WEB_ICON_URL = "https://ccellapp.in/icons/icon-192.png";
-    private static final String WEB_CLICK_URL = "https://ccellapp.in/notifications";
+    public void sendPushAll(String title, String body) {
+        List<FCMToken> allTokens = tokenRepository.findAll();
+        List<String> tokens = allTokens.stream()
+                .map(FCMToken::getFcmToken)
+                .collect(Collectors.toList());
 
-    public void sendPush(String fcmToken, String title, String messageBody) {
-        try {
-            // Determine platform from token prefix
-            boolean isWebToken = fcmToken.startsWith("fcm");
-
-            Message.Builder messageBuilder = Message.builder()
-                    .setToken(fcmToken)
+        if (!tokens.isEmpty()) {
+            MulticastMessage message = MulticastMessage.builder()
+                    .addAllTokens(tokens)
                     .setNotification(Notification.builder()
                             .setTitle(title)
-                            .setBody(messageBody)
-                            .build());
-
-            // Platform-specific configurations
-            if (isWebToken) {
-                messageBuilder.setWebpushConfig(createWebPushConfig(title, messageBody));
-            } else {
-                messageBuilder.setAndroidConfig(createAndroidConfig());
-            }
-
-            String response = firebaseMessaging.send(messageBuilder.build());
-            System.out.println("Successfully sent to " +
-                    (isWebToken ? "WEB" : "ANDROID") + ": " + response);
-
-        } catch (FirebaseMessagingException e) {
-            System.err.println("Failed to send to " + fcmToken);
-            System.err.println("Error code: " + e.getErrorCode());
-            System.err.println("Full error: " + e.getMessage());
-        }
-    }
-
-    public void sendPushAll(String title, String messageBody) {
-        try {
-            // Create base message
-            Message message = Message.builder()
-                    .setTopic("all-users")
-                    .setNotification(Notification.builder()
-                            .setTitle(title)
-                            .setBody(messageBody)
+                            .setBody(body)
                             .build())
-                    // Send both configs - FCM will use the appropriate one
-                    .setAndroidConfig(createAndroidConfig())
-                    .setWebpushConfig(createWebPushConfig(title, messageBody))
                     .build();
-
-            String response = firebaseMessaging.send(message);
-            System.out.println("Broadcast sent successfully: " + response);
-        } catch (FirebaseMessagingException e) {
-            System.err.println("Broadcast failed");
-            System.err.println("Error: " + e.getErrorCode() + " - " + e.getMessage());
+            FirebaseMessaging.getInstance().sendMulticastAsync(message);
         }
     }
 
-    private AndroidConfig createAndroidConfig() {
-        return AndroidConfig.builder()
-                .setPriority(AndroidConfig.Priority.HIGH)
-                .setNotification(AndroidNotification.builder()
-                        .setChannelId("c-cell-notifs")
-                        .setClickAction("FLUTTER_NOTIFICATION_CLICK")
+    // Updated to handle web topics
+    public void sendToTopic(String topic, String title, String body) {
+        // 1. Send to mobile devices (native FCM topics)
+        Message mobileMessage = Message.builder()
+                .setTopic(topic)
+                .setNotification(Notification.builder()
+                        .setTitle(title)
+                        .setBody(body)
                         .build())
                 .build();
-    }
+        FirebaseMessaging.getInstance().sendAsync(mobileMessage);
 
-    private WebpushConfig createWebPushConfig(String title, String body) {
-        return WebpushConfig.builder()
-                .setNotification(new WebpushNotification(
-                        title,
-                        body,
-                        "https://ccell-notification-api.onrender.com/static/icon-192.png"
-                ))
-                .setFcmOptions(WebpushFcmOptions.withLink("/"))
-                .build();
+        // 2. Send to web subscribers (manual topic system)
+        List<TopicSubscription> subscriptions = topicRepo.findByIdTopic(topic);
+        if (!subscriptions.isEmpty()) {
+            List<String> webTokens = subscriptions.stream()
+                    .map(sub -> sub.getId().getToken())
+                    .collect(Collectors.toList());
+
+            MulticastMessage webMessage = MulticastMessage.builder()
+                    .addAllTokens(webTokens)
+                    .setNotification(Notification.builder()
+                            .setTitle(title)
+                            .setBody(body)
+                            .build())
+                    .build();
+            FirebaseMessaging.getInstance().sendMulticastAsync(webMessage);
+        }
     }
 }

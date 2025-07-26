@@ -15,6 +15,7 @@ public class Notification {
     private String title;
     private String message;
     private String sender;
+    private String targetTopic;
     private String fromUser;
     private String timing;
 
@@ -26,7 +27,7 @@ public class Notification {
     public Notification() {}
 
     public Notification(Long id, String title, String message, String sender, String fromUser, String timing,
-                        LocalDate eventDate, LocalDateTime datePosted, LocalDateTime createdAt) {
+                        LocalDate eventDate, LocalDateTime datePosted, LocalDateTime createdAt, String targetTopic) {
         this.id = id;
         this.title = title;
         this.message = message;
@@ -36,6 +37,7 @@ public class Notification {
         this.eventDate = eventDate;
         this.datePosted = datePosted;
         this.createdAt = createdAt;
+        this.targetTopic = targetTopic;
     }
 
     // Automatically set createdAt and datePosted before insert
@@ -80,6 +82,9 @@ public class Notification {
     public void setSender(String sender) {
         this.sender = sender;
     }
+
+    public String getTargetTopic() { return targetTopic; }
+    public void setTargetTopic(String targetTopic) { this.targetTopic = targetTopic; }
 
     public String getFromUser() {
         return fromUser;
