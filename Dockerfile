@@ -15,6 +15,9 @@ RUN ./mvnw clean install -DskipTests
 # Use a lightweight JDK 21 image to run the jar
 FROM eclipse-temurin:21-jdk-alpine
 
+# Install wget for health checks
+RUN apk add --no-cache wget
+
 # Set working directory
 WORKDIR /app
 
