@@ -24,13 +24,14 @@
                 // modified by cursor - validate required environment variables
                 validateEnvironmentVariables();
                 
-                SpringApplication.run(NotificationPanelBackendApplication.class, args);
+            SpringApplication.run(NotificationPanelBackendApplication.class, args);
                 System.out.println("✅ Application started successfully!");
             } catch (Exception e) {
                 System.err.println("❌ Application failed to start");
                 System.err.println("Error: " + e.getMessage());
                 e.printStackTrace();
-                System.exit(1);
+                // Let Spring Boot handle the exit - don't force System.exit(1)
+                throw new RuntimeException("Application startup failed", e);
             }
         }
 

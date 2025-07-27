@@ -133,7 +133,7 @@ public class NotificationController {
             return ResponseEntity.badRequest().body("Token not registered");
         }
 
-        if (!topicRepo.existsByTokenAndTopic(request.getToken(), request.getTopic())) {
+        if (!topicRepo.existsByIdTokenAndIdTopic(request.getToken(), request.getTopic())) {
             topicRepo.save(new TopicSubscription(request.getToken(), request.getTopic()));
         }
 
@@ -145,7 +145,7 @@ public class NotificationController {
             @RequestParam String token,
             @RequestParam String topic
     ) {
-        topicRepo.deleteByTokenAndTopic(token, topic);
+        topicRepo.deleteByIdTokenAndIdTopic(token, topic);
         return ResponseEntity.ok().build();
     }
 

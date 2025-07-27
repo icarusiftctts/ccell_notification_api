@@ -14,7 +14,5 @@ public interface TopicSubscriptionRepository
     List<TopicSubscription> findByIdTopic(String topic);
     boolean existsByIdTokenAndIdTopic(String token, String topic);
     void deleteByIdToken(String token);
-
-    boolean existsByTokenAndTopic(String token, String topic);
-    void deleteByTokenAndTopic(String token, String topic);
+    void deleteByIdTokenAndIdTopic(String token, String topic);
 }

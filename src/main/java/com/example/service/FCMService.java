@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 public class FCMService {
     @Autowired
     private FCMTokenRepo fcmTokenRepo;
+    
+    @Autowired
     private TopicSubscriptionRepository topicSubscriptionRepository;
 
     public void sendPushAll(String title, String body) {
