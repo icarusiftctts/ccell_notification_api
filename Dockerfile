@@ -9,7 +9,7 @@ COPY . .
 
 RUN chmod +x mvnw
 
-# Build the project and skip tests
+# modified by cursor - Build the project and skip tests
 RUN ./mvnw clean install -DskipTests
 
 # Use a lightweight JDK 21 image to run the jar
@@ -21,8 +21,11 @@ WORKDIR /app
 # Copy the built jar from the builder stage
 COPY --from=build /app/target/*.jar app.jar
 
-# Expose the application port
+# modified by cursor - Expose the application port
 EXPOSE 8080
 
-# Run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# modified by cursor - Run the application with proper JVM options and health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:8080/health || exit 1
+
+ENTRYPOINT ["java", "-Xmx512m", "-Xms256m", "-Dspring.profiles.active=production", "-jar", "app.jar"]

@@ -3,8 +3,13 @@ services:
     name: ccell-notification-api
     plan: free
     buildCommand: ./mvnw clean install -DskipTests
-    startCommand: java -jar release/notification-panel-backend-0.0.1-SNAPSHOT.jar
+    startCommand: java -jar target/notification-panel-backend-0.0.1-SNAPSHOT.jar
     branch: main
     runtime: docker
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: production
+      - key: JAVA_OPTS
+        value: "-Xmx512m -Xms256m"
 
 
