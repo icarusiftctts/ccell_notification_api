@@ -15,14 +15,7 @@ public class GlobalCorsConfig implements WebMvcConfigurer {
                         .allowedMethods("GET")
                         .maxAge(3600);
         registry.addMapping("/**")
-                .allowedOrigins(
-                        "http://localhost:5000",
-                        "http://localhost:0000",
-                        "https://ccell-b8c42.web.app",
-                        "http://localhost:8000",
-                        "https://www.ccellapp.in",
-                        "https://ccellapp.in"
-                )
+                .allowedOrigins("*") // Allow all origins for development
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(false);
