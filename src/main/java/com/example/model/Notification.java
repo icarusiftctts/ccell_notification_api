@@ -13,6 +13,9 @@ public class Notification {
     private Long id;
 
     private String title;
+
+
+@Column(name = "message", columnDefinition = "TEXT")
     private String message;
     private String sender;
     private String targetTopic;
