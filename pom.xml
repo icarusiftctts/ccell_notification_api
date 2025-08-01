@@ -45,6 +45,12 @@
 			<version>11.10.5</version>
 		</dependency>
 
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.33</version> <!-- or later -->
+		</dependency>
+
 		<!-- Spring Boot DevTools (for hot reloading during development) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
