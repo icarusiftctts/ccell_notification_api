@@ -38,6 +38,13 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>11.10.5</version>
+		</dependency>
+
 		<!-- Spring Boot DevTools (for hot reloading during development) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
